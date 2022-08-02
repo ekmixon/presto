@@ -18,8 +18,8 @@ from docutils import nodes, utils
 
 # noinspection PyDefaultArgument,PyUnusedLocal
 def pr_role(role, rawtext, text, lineno, inliner, options={}, content=[]):
-    title = '#' + text
-    link = 'https://github.com/prestodb/presto/pull/' + text
+    title = f'#{text}'
+    link = f'https://github.com/prestodb/presto/pull/{text}'
     node = nodes.reference(text=title, refuri=link, **options)
     return [node], []
 

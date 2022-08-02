@@ -30,8 +30,8 @@ ARTIFACTS = {
 
 
 def maven_filename(artifact, version, packaging, classifier):
-    classifier = '-' + classifier if classifier else ''
-    return '%s-%s%s.%s' % (artifact, version, classifier, packaging)
+    classifier = f'-{classifier}' if classifier else ''
+    return f'{artifact}-{version}{classifier}.{packaging}'
 
 
 def maven_download(group, artifact, version, packaging, classifier):
@@ -46,8 +46,8 @@ def setup(app):
     def download_link_role(role, rawtext, text, lineno, inliner, options={}, content=[]):
         version = app.config.release
 
-        if not text in ARTIFACTS:
-            inliner.reporter.error('Unsupported download type: ' + text)
+        if text not in ARTIFACTS:
+            inliner.reporter.error(f'Unsupported download type: {text}')
             return [], []
 
         artifact, packaging, classifier = ARTIFACTS[text]
@@ -58,6 +58,7 @@ def setup(app):
         node = nodes.reference(title, title, internal=False, refuri=uri)
 
         return [node], []
+
     app.add_role('maven_download', download_link_role)
 
     return {

@@ -31,10 +31,14 @@ sys.path.insert(0, os.path.abspath('ext'))
 
 
 def child_node(node, name):
-    for i in node.childNodes:
-        if (i.nodeType == i.ELEMENT_NODE) and (i.tagName == name):
-            return i
-    return None
+    return next(
+        (
+            i
+            for i in node.childNodes
+            if (i.nodeType == i.ELEMENT_NODE) and (i.tagName == name)
+        ),
+        None,
+    )
 
 
 def node_text(node):
@@ -92,7 +96,7 @@ rst_epilog = """
 html_theme = 'sphinx_material'
 
 # Set link name generated in the top bar.
-html_title = '%s %s Documentation' % (project, release)
+html_title = f'{project} {release} Documentation'
 html_logo = 'images/logo.png'
 html_favicon = 'images/favicon.ico'
 
